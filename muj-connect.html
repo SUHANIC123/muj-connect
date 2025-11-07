@@ -1,0 +1,1711 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MUJ CONNECT - Your Campus, Your Connection</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --muj-red: #A41E34;
+            --muj-gold: #FFD700;
+        }
+        
+        body {
+            font-family: 'Inter', sans-serif;
+        }
+        
+        .muj-red {
+            color: var(--muj-red);
+        }
+        
+        .bg-muj-red {
+            background-color: var(--muj-red);
+        }
+        
+        .border-muj-red {
+            border-color: var(--muj-red);
+        }
+        
+        .hover\:bg-muj-red:hover {
+            background-color: var(--muj-red);
+        }
+        
+        .text-muj-gold {
+            color: var(--muj-gold);
+        }
+        
+        .bg-muj-gold {
+            background-color: var(--muj-gold);
+        }
+        
+        .hover\:bg-muj-gold:hover {
+            background-color: var(--muj-gold);
+        }
+        
+        .page {
+            display: none;
+        }
+        
+        .page.active {
+            display: block;
+        }
+        
+        .star-rating {
+            display: inline-flex;
+        }
+        
+        .star {
+            color: #ddd;
+            cursor: pointer;
+            transition: color 0.2s;
+        }
+        
+        .star.active {
+            color: var(--muj-gold);
+        }
+        
+        .confession-card {
+            transition: transform 0.2s;
+        }
+        
+        .confession-card:hover {
+            transform: translateY(-2px);
+        }
+        
+        .facility-card {
+            transition: all 0.3s ease;
+        }
+        
+        .facility-card:hover {
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+            transform: translateY(-5px);
+        }
+        
+        .nav-link {
+            position: relative;
+            transition: color 0.3s;
+        }
+        
+        .nav-link::after {
+            content: '';
+            position: absolute;
+            width: 0;
+            height: 2px;
+            bottom: -5px;
+            left: 0;
+            background-color: var(--muj-red);
+            transition: width 0.3s;
+        }
+        
+        .nav-link:hover::after {
+            width: 100%;
+        }
+        
+        .mobile-menu {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.3s ease-out;
+        }
+        
+        .mobile-menu.active {
+            max-height: 500px;
+        }
+        
+        .tab-content {
+            display: none;
+        }
+        
+        .tab-content.active {
+            display: block;
+        }
+        
+        .tab-button {
+            transition: all 0.3s;
+        }
+        
+        .tab-button.active {
+            border-bottom: 2px solid var(--muj-red);
+            color: var(--muj-red);
+        }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        .fade-in {
+            animation: fadeIn 0.5s ease-out;
+        }
+    </style>
+</head>
+<body class="bg-gray-50">
+    <!-- Header -->
+    <header class="bg-white shadow-md sticky top-0 z-50">
+        <div class="container mx-auto px-4 py-3">
+            <div class="flex justify-between items-center">
+                <div class="flex items-center space-x-3">
+                    <div class="w-12 h-12 bg-muj-red rounded-full flex items-center justify-center">
+                        <span class="text-white font-bold text-xl">MUJ</span>
+                    </div>
+                    <h1 class="text-xl font-bold muj-red">MUJ CONNECT</h1>
+                </div>
+                
+                <!-- Desktop Navigation -->
+                <nav class="hidden md:flex space-x-6">
+                    <a href="#" onclick="showPage('home')" class="nav-link text-gray-700 hover:text-muj-red">Home</a>
+                    <a href="#" onclick="showPage('study-spots')" class="nav-link text-gray-700 hover:text-muj-red">Study Spots</a>
+                    <a href="#" onclick="showPage('eating-spots')" class="nav-link text-gray-700 hover:text-muj-red">Eating Spots</a>
+                    <a href="#" onclick="showPage('confessions')" class="nav-link text-gray-700 hover:text-muj-red">Confessions</a>
+                    <a href="#" onclick="showPage('reviews')" class="nav-link text-gray-700 hover:text-muj-red">Reviews</a>
+                    <a href="#" onclick="showPage('notices-events')" class="nav-link text-gray-700 hover:text-muj-red">Notices & Events</a>
+                    <a href="#" onclick="showPage('forum')" class="nav-link text-gray-700 hover:text-muj-red">Forum</a>
+                    <a href="#" onclick="showPage('profile')" class="nav-link text-gray-700 hover:text-muj-red">Profile</a>
+                    <a href="#" onclick="showPage('admin')" class="nav-link text-gray-700 hover:text-muj-red">Admin</a>
+                </nav>
+                
+                <!-- Mobile menu button -->
+                <button class="md:hidden text-gray-700 focus:outline-none" onclick="toggleMobileMenu()">
+                    <i class="fas fa-bars text-xl"></i>
+                </button>
+            </div>
+            
+            <!-- Mobile Navigation -->
+            <div id="mobileMenu" class="mobile-menu md:hidden mt-4 pb-4 space-y-2">
+                <a href="#" onclick="showPage('home')" class="block text-gray-700 hover:text-muj-red py-1">Home</a>
+                <a href="#" onclick="showPage('study-spots')" class="block text-gray-700 hover:text-muj-red py-1">Study Spots</a>
+                <a href="#" onclick="showPage('eating-spots')" class="block text-gray-700 hover:text-muj-red py-1">Eating Spots</a>
+                <a href="#" onclick="showPage('confessions')" class="block text-gray-700 hover:text-muj-red py-1">Confessions</a>
+                <a href="#" onclick="showPage('reviews')" class="block text-gray-700 hover:text-muj-red py-1">Reviews</a>
+                <a href="#" onclick="showPage('notices-events')" class="block text-gray-700 hover:text-muj-red py-1">Notices & Events</a>
+                <a href="#" onclick="showPage('forum')" class="block text-gray-700 hover:text-muj-red py-1">Forum</a>
+                <a href="#" onclick="showPage('profile')" class="block text-gray-700 hover:text-muj-red py-1">Profile</a>
+                <a href="#" onclick="showPage('admin')" class="block text-gray-700 hover:text-muj-red py-1">Admin</a>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <main>
+        <!-- Home Page -->
+        <div id="home" class="page active">
+            <!-- Hero Section -->
+            <div class="bg-gradient-to-r from-muj-red to-red-600 text-white py-20">
+                <div class="container mx-auto px-4 text-center">
+                    <div class="flex justify-center mb-6">
+                        <div class="w-24 h-24 bg-white rounded-full flex items-center justify-center">
+                            <span class="muj-red font-bold text-3xl">MUJ</span>
+                        </div>
+                    </div>
+                    <h1 class="text-4xl md:text-5xl font-bold mb-4">MUJ CONNECT</h1>
+                    <p class="text-xl md:text-2xl mb-8">Your Campus, Your Connection.</p>
+                    <p class="max-w-2xl mx-auto text-red-100">
+                        A digital hub for students and faculty of Manipal University Jaipur to find study spots, 
+                        eating spots, share confessions, post reviews, and stay updated with events and notices.
+                    </p>
+                </div>
+            </div>
+            
+            <!-- Features Section -->
+            <div class="py-16 bg-gray-50">
+                <div class="container mx-auto px-4">
+                    <h2 class="text-3xl font-bold text-center mb-12 muj-red">Explore Our Features</h2>
+                    
+                    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                        <!-- Feature Card 1 -->
+                        <div class="facility-card bg-white rounded-lg shadow-md overflow-hidden">
+                            <div class="p-6">
+                                <div class="w-16 h-16 bg-red-100 rounded-full flex items-center justify-center mb-4">
+                                    <i class="fas fa-book text-2xl muj-red"></i>
+                                </div>
+                                <h3 class="text-xl font-semibold mb-2 muj-red">Study Spots</h3>
+                                <p class="text-gray-600 mb-4">Find the perfect place to study with filters for noise level, WiFi availability, and more.</p>
+                                <button onclick="showPage('study-spots')" class="w-full bg-muj-red text-white px-4 py-2 rounded-md hover:bg-red-700 transition">
+                                    Find Study Spots
+                                </button>
+                            </div>
+                        </div>
+                        
+                        <!-- Feature Card 2 -->
+                        <div class="facility-card bg-white rounded-lg shadow-md overflow-hidden">
+                            <div class="p-6">
+                                <div class="w-16 h-16 bg-red-100 rounded-full flex items-center justify-center mb-4">
+                                    <i class="fas fa-utensils text-2xl muj-red"></i>
+                                </div>
+                                <h3 class="text-xl font-semibold mb-2 muj-red">Eating Spots</h3>
+                                <p class="text-gray-600 mb-4">Discover campus eateries with real-time information on cuisine, prices, and operating hours.</p>
+                                <button onclick="showPage('eating-spots')" class="w-full bg-muj-red text-white px-4 py-2 rounded-md hover:bg-red-700 transition">
+                                    Discover Cafeterias
+                                </button>
+                            </div>
+                        </div>
+                        
+                        <!-- Feature Card 3 -->
+                        <div class="facility-card bg-white rounded-lg shadow-md overflow-hidden">
+                            <div class="p-6">
+                                <div class="w-16 h-16 bg-red-100 rounded-full flex items-center justify-center mb-4">
+                                    <i class="fas fa-comment-alt text-2xl muj-red"></i>
+                                </div>
+                                <h3 class="text-xl font-semibold mb-2 muj-red">Confessions</h3>
+                                <p class="text-gray-600 mb-4">Share your thoughts anonymously and read what others have to say about campus life.</p>
+                                <button onclick="showPage('confessions')" class="w-full bg-muj-red text-white px-4 py-2 rounded-md hover:bg-red-700 transition">
+                                    Make a Confession
+                                </button>
+                            </div>
+                        </div>
+                        
+                        <!-- Feature Card 4 -->
+                        <div class="facility-card bg-white rounded-lg shadow-md overflow-hidden">
+                            <div class="p-6">
+                                <div class="w-16 h-16 bg-red-100 rounded-full flex items-center justify-center mb-4">
+                                    <i class="fas fa-star text-2xl muj-red"></i>
+                                </div>
+                                <h3 class="text-xl font-semibold mb-2 muj-red">Reviews</h3>
+                                <p class="text-gray-600 mb-4">Rate and review campus facilities to help others make informed decisions.</p>
+                                <button onclick="showPage('reviews')" class="w-full bg-muj-red text-white px-4 py-2 rounded-md hover:bg-red-700 transition">
+                                    Write a Review
+                                </button>
+                            </div>
+                        </div>
+                        
+                        <!-- Feature Card 5 -->
+                        <div class="facility-card bg-white rounded-lg shadow-md overflow-hidden">
+                            <div class="p-6">
+                                <div class="w-16 h-16 bg-red-100 rounded-full flex items-center justify-center mb-4">
+                                    <i class="fas fa-bullhorn text-2xl muj-red"></i>
+                                </div>
+                                <h3 class="text-xl font-semibold mb-2 muj-red">Notices & Events</h3>
+                                <p class="text-gray-600 mb-4">Stay updated with the latest campus announcements and upcoming events.</p>
+                                <button onclick="showPage('notices-events')" class="w-full bg-muj-red text-white px-4 py-2 rounded-md hover:bg-red-700 transition">
+                                    View Notices
+                                </button>
+                            </div>
+                        </div>
+                        
+                        <!-- Feature Card 6 -->
+                        <div class="facility-card bg-white rounded-lg shadow-md overflow-hidden">
+                            <div class="p-6">
+                                <div class="w-16 h-16 bg-red-100 rounded-full flex items-center justify-center mb-4">
+                                    <i class="fas fa-comments text-2xl muj-red"></i>
+                                </div>
+                                <h3 class="text-xl font-semibold mb-2 muj-red">Forum</h3>
+                                <p class="text-gray-600 mb-4">Join discussions, ask questions, and connect with fellow students and faculty.</p>
+                                <button onclick="showPage('forum')" class="w-full bg-muj-red text-white px-4 py-2 rounded-md hover:bg-red-700 transition">
+                                    Join Forum
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Call to Action Section -->
+            <div class="py-16 bg-muj-red text-white">
+                <div class="container mx-auto px-4 text-center">
+                    <h2 class="text-3xl font-bold mb-4">Join the MUJ Community Today</h2>
+                    <p class="max-w-2xl mx-auto mb-8 text-red-100">
+                        Connect with fellow students, share your experiences, and make the most of your time at Manipal University Jaipur.
+                    </p>
+                    <div class="flex flex-col sm:flex-row justify-center gap-4">
+                        <button onclick="showPage('profile')" class="bg-muj-gold text-muj-red px-6 py-3 rounded-md font-semibold hover:bg-yellow-400 transition">
+                            Sign Up Now
+                        </button>
+                        <button onclick="showLoginModal()" class="bg-transparent border-2 border-white text-white px-6 py-3 rounded-md font-semibold hover:bg-white hover:text-muj-red transition">
+                            Log In
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Study Spots Page -->
+        <div id="study-spots" class="page">
+            <div class="bg-white py-8">
+                <div class="container mx-auto px-4">
+                    <h1 class="text-3xl font-bold mb-2 muj-red">Study Spots</h1>
+                    <p class="text-gray-600 mb-8">Find the perfect place to study on campus</p>
+                    
+                    <!-- Filters Section -->
+                    <div class="bg-gray-50 p-6 rounded-lg mb-8">
+                        <h2 class="text-xl font-semibold mb-4 muj-red">Filter Study Spots</h2>
+                        
+                        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-4">
+                            <div>
+                                <label class="block text-sm font-medium text-gray-700 mb-1">Search</label>
+                                <input type="text" placeholder="Search spots..." class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-muj-red">
+                            </div>
+                            
+                            <div>
+                                <label class="block text-sm font-medium text-gray-700 mb-1">Noise Level</label>
+                                <select class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-muj-red">
+                                    <option>Any</option>
+                                    <option>Quiet</option>
+                                    <option>Moderate</option>
+                                    <option>Variable</option>
+                                </select>
+                            </div>
+                            
+                            <div>
+                                <label class="block text-sm font-medium text-gray-700 mb-1">WiFi</label>
+                                <select class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-muj-red">
+                                    <option>Any</option>
+                                    <option>Available</option>
+                                    <option>Not Available</option>
+                                </select>
+                            </div>
+                            
+                            <div>
+                                <label class="block text-sm font-medium text-gray-700 mb-1">Power Outlets</label>
+                                <select class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-muj-red">
+                                    <option>Any</option>
+                                    <option>Available</option>
+                                    <option>Not Available</option>
+                                </select>
+                            </div>
+                            
+                            <div>
+                                <label class="block text-sm font-medium text-gray-700 mb-1">Seating Capacity</label>
+                                <select class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-muj-red">
+                                    <option>Any</option>
+                                    <option>Low</option>
+                                    <option>Medium</option>
+                                    <option>High</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Study Spots Grid -->
+                    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                        <!-- Study Spot Card 1 -->
+                        <div class="facility-card bg-white rounded-lg shadow-md overflow-hidden">
+                            <img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80" alt="Central Library" class="w-full h-48 object-cover">
+                            <div class="p-5">
+                                <div class="flex justify-between items-start mb-2">
+                                    <h3 class="text-xl font-semibold muj-red">Central Library</h3>
+                                    <div class="flex items-center bg-yellow-100 text-yellow-800 px-2 py-1 rounded">
+                                        <i class="fas fa-star mr-1"></i>
+                                        <span>4.7</span>
+                                    </div>
+                                </div>
+                                <p class="text-gray-600 mb-4">The main library with extensive collection of books and journals</p>
+                                
+                                <div class="grid grid-cols-2 gap-2 mb-4">
+                                    <div class="flex items-center text-sm">
+                                        <i class="fas fa-volume-down mr-1 text-gray-500"></i>
+                                        <span>Quiet</span>
+                                    </div>
+                                    <div class="flex items-center text-sm">
+                                        <i class="fas fa-wifi mr-1 text-gray-500"></i>
+                                        <span>WiFi: Available</span>
+                                    </div>
+                                    <div class="flex items-center text-sm">
+                                        <i class="fas fa-plug mr-1 text-gray-500"></i>
+                                        <span>Power: Available</span>
+                                    </div>
+                                    <div class="flex items-center text-sm">
+                                        <i class="fas fa-users mr-1 text-gray-500"></i>
+                                        <span>Seating: High</span>
+                                    </div>
+                                </div>
+                                
+                                <button class="w-full bg-muj-red text-white py-2 rounded-md hover:bg-red-700 transition">
+                                    View Details
+                                </button>
+                            </div>
+                        </div>
+                        
+                        <!-- Study Spot Card 2 -->
+                        <div class="facility-card bg-white rounded-lg shadow-md overflow-hidden">
+                            <img src="https://images.unsplash.com/photo-1521791136064-7986c2920216?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80" alt="Innovation Center" class="w-full h-48 object-cover">
+                            <div class="p-5">
+                                <div class="flex justify-between items-start mb-2">
+                                    <h3 class="text-xl font-semibold muj-red">Innovation Center</h3>
+                                    <div class="flex items-center bg-yellow-100 text-yellow-800 px-2 py-1 rounded">
+                                        <i class="fas fa-star mr-1"></i>
+                                        <span>4.5</span>
+                                    </div>
+                                </div>
+                                <p class="text-gray-600 mb-4">Modern collaborative space with tech facilities</p>
+                                
+                                <div class="grid grid-cols-2 gap-2 mb-4">
+                                    <div class="flex items-center text-sm">
+                                        <i class="fas fa-volume-down mr-1 text-gray-500"></i>
+                                        <span>Moderate</span>
+                                    </div>
+                                    <div class="flex items-center text-sm">
+                                        <i class="fas fa-wifi mr-1 text-gray-500"></i>
+                                        <span>WiFi: Available</span>
+                                    </div>
+                                    <div class="flex items-center text-sm">
+                                        <i class="fas fa-plug mr-1 text-gray-500"></i>
+                                        <span>Power: Available</span>
+                                    </div>
+                                    <div class="flex items-center text-sm">
+                                        <i class="fas fa-users mr-1 text-gray-500"></i>
+                                        <span>Seating: Medium</span>
+                                    </div>
+                                </div>
+                                
+                                <button class="w-full bg-muj-red text-white py-2 rounded-md hover:bg-red-700 transition">
+                                    View Details
+                                </button>
+                            </div>
+                        </div>
+                        
+                        <!-- Study Spot Card 3 -->
+                        <div class="facility-card bg-white rounded-lg shadow-md overflow-hidden">
+                            <img src="https://images.unsplash.com/photo-1501854140801-50d01698950b?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80" alt="Central Lawn" class="w-full h-48 object-cover">
+                            <div class="p-5">
+                                <div class="flex justify-between items-start mb-2">
+                                    <h3 class="text-xl font-semibold muj-red">Central Lawn</h3>
+                                    <div class="flex items-center bg-yellow-100 text-yellow-800 px-2 py-1 rounded">
+                                        <i class="fas fa-star mr-1"></i>
+                                        <span>4.2</span>
+                                    </div>
+                                </div>
+                                <p class="text-gray-600 mb-4">Open green space perfect for outdoor studying</p>
+                                
+                                <div class="grid grid-cols-2 gap-2 mb-4">
+                                    <div class="flex items-center text-sm">
+                                        <i class="fas fa-volume-down mr-1 text-gray-500"></i>
+                                        <span>Variable</span>
+                                    </div>
+                                    <div class="flex items-center text-sm">
+                                        <i class="fas fa-wifi mr-1 text-gray-500"></i>
+                                        <span>WiFi: Not Available</span>
+                                    </div>
+                                    <div class="flex items-center text-sm">
+                                        <i class="fas fa-plug mr-1 text-gray-500"></i>
+                                        <span>Power: Not Available</span>
+                                    </div>
+                                    <div class="flex items-center text-sm">
+                                        <i class="fas fa-users mr-1 text-gray-500"></i>
+                                        <span>Seating: High</span>
+                                    </div>
+                                </div>
+                                
+                                <button class="w-full bg-muj-red text-white py-2 rounded-md hover:bg-red-700 transition">
+                                    View Details
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Eating Spots Page -->
+        <div id="eating-spots" class="page">
+            <div class="bg-white py-8">
+                <div class="container mx-auto px-4">
+                    <h1 class="text-3xl font-bold mb-2 muj-red">Eating Spots</h1>
+                    <p class="text-gray-600 mb-8">Discover the best places to eat on campus</p>
+                    
+                    <!-- Filters Section -->
+                    <div class="bg-gray-50 p-6 rounded-lg mb-8">
+                        <h2 class="text-xl font-semibold mb-4 muj-red">Filter Eating Spots</h2>
+                        
+                        <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+                            <div>
+                                <label class="block text-sm font-medium text-gray-700 mb-1">Search</label>
+                                <input type="text" placeholder="Search spots..." class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-muj-red">
+                            </div>
+                            
+                            <div>
+                                <label class="block text-sm font-medium text-gray-700 mb-1">Cuisine Type</label>
+                                <select class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-muj-red">
+                                    <option>Any</option>
+                                    <option>Multi-cuisine</option>
+                                    <option>Cafe</option>
+                                    <option>Indian</option>
+                                    <option>Fast Food</option>
+                                    <option>Street Food</option>
+                                </select>
+                            </div>
+                            
+                            <div>
+                                <label class="block text-sm font-medium text-gray-700 mb-1">Price Range</label>
+                                <select class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-muj-red">
+                                    <option>Any</option>
+                                    <option>Budget (₹)</option>
+                                    <option>Moderate (₹₹)</option>
+                                    <option>Expensive (₹₹₹)</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Eating Spots Grid -->
+                    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                        <!-- Eating Spot Card 1 -->
+                        <div class="facility-card bg-white rounded-lg shadow-md overflow-hidden">
+                            <img src="https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80" alt="Main Food Court" class="w-full h-48 object-cover">
+                            <div class="p-5">
+                                <div class="flex justify-between items-start mb-2">
+                                    <h3 class="text-xl font-semibold muj-red">Main Food Court</h3>
+                                    <span class="px-2 py-1 rounded-full text-xs font-medium bg-green-100 text-green-800">
+                                        Open
+                                    </span>
+                                </div>
+                                <p class="text-gray-600 mb-4">Large food court with multiple cuisine options</p>
+                                
+                                <div class="grid grid-cols-2 gap-2 mb-4">
+                                    <div class="flex items-center text-sm">
+                                        <i class="fas fa-utensils mr-1 text-gray-500"></i>
+                                        <span>Multi-cuisine</span>
+                                    </div>
+                                    <div class="flex items-center text-sm">
+                                        <i class="fas fa-rupee-sign mr-1 text-gray-500"></i>
+                                        <span>₹₹</span>
+                                    </div>
+                                    <div class="flex items-center text-sm">
+                                        <i class="fas fa-clock mr-1 text-gray-500"></i>
+                                        <span>8:00 AM - 10:00 PM</span>
+                                    </div>
+                                </div>
+                                
+                                <button class="w-full bg-muj-red text-white py-2 rounded-md hover:bg-red-700 transition">
+                                    View Details
+                                </button>
+                            </div>
+                        </div>
+                        
+                        <!-- Eating Spot Card 2 -->
+                        <div class="facility-card bg-white rounded-lg shadow-md overflow-hidden">
+                            <img src="https://images.unsplash.com/photo-1554118811-1e0d58224f24?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80" alt="Nescafe" class="w-full h-48 object-cover">
+                            <div class="p-5">
+                                <div class="flex justify-between items-start mb-2">
+                                    <h3 class="text-xl font-semibold muj-red">Nescafe</h3>
+                                    <span class="px-2 py-1 rounded-full text-xs font-medium bg-green-100 text-green-800">
+                                        Open
+                                    </span>
+                                </div>
+                                <p class="text-gray-600 mb-4">Coffee shop with snacks and beverages</p>
+                                
+                                <div class="grid grid-cols-2 gap-2 mb-4">
+                                    <div class="flex items-center text-sm">
+                                        <i class="fas fa-utensils mr-1 text-gray-500"></i>
+                                        <span>Cafe</span>
+                                    </div>
+                                    <div class="flex items-center text-sm">
+                                        <i class="fas fa-rupee-sign mr-1 text-gray-500"></i>
+                                        <span>₹</span>
+                                    </div>
+                                    <div class="flex items-center text-sm">
+                                        <i class="fas fa-clock mr-1 text-gray-500"></i>
+                                        <span>9:00 AM - 8:00 PM</span>
+                                    </div>
+                                </div>
+                                
+                                <button class="w-full bg-muj-red text-white py-2 rounded-md hover:bg-red-700 transition">
+                                    View Details
+                                </button>
+                            </div>
+                        </div>
+                        
+                        <!-- Eating Spot Card 3 -->
+                        <div class="facility-card bg-white rounded-lg shadow-md overflow-hidden">
+                            <img src="https://images.unsplash.com/photo-1565299624946-b28f40a0ca4b?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80" alt="Food Street" class="w-full h-48 object-cover">
+                            <div class="p-5">
+                                <div class="flex justify-between items-start mb-2">
+                                    <h3 class="text-xl font-semibold muj-red">Food Street</h3>
+                                    <span class="px-2 py-1 rounded-full text-xs font-medium bg-red-100 text-red-800">
+                                        Closed
+                                    </span>
+                                </div>
+                                <p class="text-gray-600 mb-4">Street food style stalls with variety of options</p>
+                                
+                                <div class="grid grid-cols-2 gap-2 mb-4">
+                                    <div class="flex items-center text-sm">
+                                        <i class="fas fa-utensils mr-1 text-gray-500"></i>
+                                        <span>Street Food</span>
+                                    </div>
+                                    <div class="flex items-center text-sm">
+                                        <i class="fas fa-rupee-sign mr-1 text-gray-500"></i>
+                                        <span>₹₹</span>
+                                    </div>
+                                    <div class="flex items-center text-sm">
+                                        <i class="fas fa-clock mr-1 text-gray-500"></i>
+                                        <span>11:00 AM - 9:00 PM</span>
+                                    </div>
+                                </div>
+                                
+                                <button class="w-full bg-muj-red text-white py-2 rounded-md hover:bg-red-700 transition">
+                                    View Details
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Confessions Page -->
+        <div id="confessions" class="page">
+            <div class="bg-white py-8">
+                <div class="container mx-auto px-4">
+                    <h1 class="text-3xl font-bold mb-2 muj-red">Anonymous Confessions</h1>
+                    <p class="text-gray-600 mb-8">Share your thoughts anonymously with the MUJ community</p>
+                    
+                    <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+                        <!-- Confession Form -->
+                        <div class="lg:col-span-1">
+                            <div class="bg-gray-50 p-6 rounded-lg shadow-md">
+                                <h2 class="text-xl font-semibold mb-4 muj-red">Make a Confession</h2>
+                                
+                                <form onsubmit="submitConfession(event)">
+                                    <div class="mb-4">
+                                        <label class="block text-sm font-medium text-gray-700 mb-1">Category</label>
+                                        <select class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-muj-red">
+                                            <option>Academic</option>
+                                            <option>Social</option>
+                                            <option>Campus Life</option>
+                                            <option>Random</option>
+                                        </select>
+                                    </div>
+                                    
+                                    <div class="mb-4">
+                                        <label class="block text-sm font-medium text-gray-700 mb-1">Your Confession</label>
+                                        <textarea rows="4" placeholder="Share your thoughts anonymously..." class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-muj-red" required></textarea>
+                                    </div>
+                                    
+                                    <button type="submit" class="w-full bg-muj-red text-white py-2 rounded-md hover:bg-red-700 transition">
+                                        Submit Confession
+                                    </button>
+                                </form>
+                                
+                                <div class="mt-6 p-4 bg-yellow-50 rounded-md">
+                                    <h3 class="font-medium text-yellow-800 mb-2">Please Note</h3>
+                                    <p class="text-sm text-yellow-700">
+                                        All confessions are subject to moderation before being published. 
+                                        Please maintain respect and avoid sharing inappropriate content.
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <!-- Confessions List -->
+                        <div class="lg:col-span-2">
+                            <h2 class="text-xl font-semibold mb-4 muj-red">Recent Confessions</h2>
+                            
+                            <div class="space-y-4">
+                                <!-- Confession Card 1 -->
+                                <div class="confession-card bg-white border border-gray-200 rounded-lg shadow-sm p-5">
+                                    <div class="flex justify-between items-start mb-3">
+                                        <span class="px-2 py-1 rounded-full text-xs font-medium bg-blue-100 text-blue-800">
+                                            Academic
+                                        </span>
+                                        <span class="text-xs text-gray-500">2023-05-15 14:30</span>
+                                    </div>
+                                    
+                                    <p class="text-gray-700 mb-4">I've been struggling with my programming assignments lately. Can anyone recommend good resources to learn coding better?</p>
+                                    
+                                    <div class="flex justify-end mt-4 space-x-2">
+                                        <button class="text-gray-500 hover:text-muj-red transition">
+                                            <i class="far fa-heart"></i>
+                                        </button>
+                                        <button class="text-gray-500 hover:text-muj-red transition">
+                                            <i class="fas fa-share"></i>
+                                        </button>
+                                    </div>
+                                </div>
+                                
+                                <!-- Confession Card 2 -->
+                                <div class="confession-card bg-white border border-gray-200 rounded-lg shadow-sm p-5">
+                                    <div class="flex justify-between items-start mb-3">
+                                        <span class="px-2 py-1 rounded-full text-xs font-medium bg-green-100 text-green-800">
+                                            Social
+                                        </span>
+                                        <span class="text-xs text-gray-500">2023-05-14 09:15</span>
+                                    </div>
+                                    
+                                    <p class="text-gray-700 mb-4">Shoutout to the person who left encouraging sticky notes on library desks. You made my day during finals week!</p>
+                                    
+                                    <div class="flex justify-end mt-4 space-x-2">
+                                        <button class="text-gray-500 hover:text-muj-red transition">
+                                            <i class="far fa-heart"></i>
+                                        </button>
+                                        <button class="text-gray-500 hover:text-muj-red transition">
+                                            <i class="fas fa-share"></i>
+                                        </button>
+                                    </div>
+                                </div>
+                                
+                                <!-- Confession Card 3 -->
+                                <div class="confession-card bg-white border border-gray-200 rounded-lg shadow-sm p-5">
+                                    <div class="flex justify-between items-start mb-3">
+                                        <span class="px-2 py-1 rounded-full text-xs font-medium bg-purple-100 text-purple-800">
+                                            Campus Life
+                                        </span>
+                                        <span class="text-xs text-gray-500">2023-05-13 16:45</span>
+                                    </div>
+                                    
+                                    <p class="text-gray-700 mb-4">The new coffee machine in the engineering block is a game changer. Thank you, administration!</p>
+                                    
+                                    <div class="flex justify-end mt-4 space-x-2">
+                                        <button class="text-gray-500 hover:text-muj-red transition">
+                                            <i class="far fa-heart"></i>
+                                        </button>
+                                        <button class="text-gray-500 hover:text-muj-red transition">
+                                            <i class="fas fa-share"></i>
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Reviews Page -->
+        <div id="reviews" class="page">
+            <div class="bg-white py-8">
+                <div class="container mx-auto px-4">
+                    <h1 class="text-3xl font-bold mb-2 muj-red">Reviews</h1>
+                    <p class="text-gray-600 mb-8">Rate and review campus facilities</p>
+                    
+                    <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+                        <!-- Review Form -->
+                        <div class="lg:col-span-1">
+                            <div class="bg-gray-50 p-6 rounded-lg shadow-md">
+                                <h2 class="text-xl font-semibold mb-4 muj-red">Write a Review</h2>
+                                
+                                <form onsubmit="submitReview(event)">
+                                    <div class="mb-4">
+                                        <label class="block text-sm font-medium text-gray-700 mb-1">Select Facility</label>
+                                        <select class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-muj-red" required>
+                                            <option>Choose a facility...</option>
+                                            <option>Central Library (Study Spot)</option>
+                                            <option>Main Food Court (Eating Spot)</option>
+                                            <option>Innovation Center (Study Spot)</option>
+                                            <option>Nescafe (Eating Spot)</option>
+                                        </select>
+                                    </div>
+                                    
+                                    <div class="mb-4">
+                                        <label class="block text-sm font-medium text-gray-700 mb-1">Rating</label>
+                                        <div class="star-rating">
+                                            <i class="fas fa-star star active" data-rating="1"></i>
+                                            <i class="fas fa-star star active" data-rating="2"></i>
+                                            <i class="fas fa-star star active" data-rating="3"></i>
+                                            <i class="fas fa-star star active" data-rating="4"></i>
+                                            <i class="fas fa-star star active" data-rating="5"></i>
+                                        </div>
+                                    </div>
+                                    
+                                    <div class="mb-4">
+                                        <label class="block text-sm font-medium text-gray-700 mb-1">Your Review</label>
+                                        <textarea rows="4" placeholder="Share your experience..." class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-muj-red" required></textarea>
+                                    </div>
+                                    
+                                    <div class="mb-4">
+                                        <label class="block text-sm font-medium text-gray-700 mb-1">Upload Photo (Optional)</label>
+                                        <div class="flex items-center justify-center w-full h-32 border-2 border-gray-300 border-dashed rounded-lg cursor-pointer bg-gray-50 hover:bg-gray-100">
+                                            <div class="flex flex-col items-center justify-center pt-5 pb-6">
+                                                <i class="fas fa-cloud-upload-alt text-gray-400 text-2xl mb-2"></i>
+                                                <p class="mb-2 text-sm text-gray-500">
+                                                    <span class="font-semibold">Click to upload</span> or drag and drop
+                                                </p>
+                                                <p class="text-xs text-gray-500">PNG, JPG, GIF up to 10MB</p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    
+                                    <button type="submit" class="w-full bg-muj-red text-white py-2 rounded-md hover:bg-red-700 transition">
+                                        Submit Review
+                                    </button>
+                                </form>
+                            </div>
+                        </div>
+                        
+                        <!-- Reviews List -->
+                        <div class="lg:col-span-2">
+                            <div class="flex justify-between items-center mb-4">
+                                <h2 class="text-xl font-semibold muj-red">Recent Reviews</h2>
+                            </div>
+                            
+                            <!-- Facility Filter -->
+                            <div class="mb-6">
+                                <h3 class="text-lg font-medium mb-3 text-gray-700">Filter by Facility</h3>
+                                <div class="flex flex-wrap gap-2">
+                                    <button class="px-3 py-1 bg-gray-100 text-gray-700 rounded-full text-sm hover:bg-red-100 hover:text-muj-red transition">
+                                        Central Library
+                                    </button>
+                                    <button class="px-3 py-1 bg-gray-100 text-gray-700 rounded-full text-sm hover:bg-red-100 hover:text-muj-red transition">
+                                        Main Food Court
+                                    </button>
+                                    <button class="px-3 py-1 bg-gray-100 text-gray-700 rounded-full text-sm hover:bg-red-100 hover:text-muj-red transition">
+                                        Innovation Center
+                                    </button>
+                                    <button class="px-3 py-1 bg-gray-100 text-gray-700 rounded-full text-sm hover:bg-red-100 hover:text-muj-red transition">
+                                        Nescafe
+                                    </button>
+                                </div>
+                            </div>
+                            
+                            <!-- Reviews List -->
+                            <div class="space-y-4">
+                                <!-- Review Card 1 -->
+                                <div class="bg-white border border-gray-200 rounded-lg shadow-sm p-5 hover:shadow-md transition">
+                                    <div class="flex justify-between items-start mb-3">
+                                        <div>
+                                            <h3 class="font-medium text-gray-900">Central Library</h3>
+                                            <div class="flex items-center mt-1">
+                                                <i class="fas fa-star text-yellow-500"></i>
+                                                <i class="fas fa-star text-yellow-500"></i>
+                                                <i class="fas fa-star text-yellow-500"></i>
+                                                <i class="fas fa-star text-yellow-500"></i>
+                                                <i class="fas fa-star text-yellow-500"></i>
+                                            </div>
+                                        </div>
+                                        <span class="text-xs text-gray-500">2023-05-10</span>
+                                    </div>
+                                    
+                                    <p class="text-gray-700 mb-3">The library is excellent! Great collection of books and very quiet environment perfect for studying.</p>
+                                    
+                                    <div class="flex justify-between items-center">
+                                        <span class="text-sm text-gray-500">by Anonymous Student</span>
+                                        <div class="flex space-x-2">
+                                            <button class="text-gray-500 hover:text-muj-red transition">
+                                                <i class="far fa-thumbs-up"></i>
+                                            </button>
+                                            <button class="text-gray-500 hover:text-muj-red transition">
+                                                <i class="far fa-comment"></i>
+                                            </button>
+                                        </div>
+                                    </div>
+                                </div>
+                                
+                                <!-- Review Card 2 -->
+                                <div class="bg-white border border-gray-200 rounded-lg shadow-sm p-5 hover:shadow-md transition">
+                                    <div class="flex justify-between items-start mb-3">
+                                        <div>
+                                            <h3 class="font-medium text-gray-900">Main Food Court</h3>
+                                            <div class="flex items-center mt-1">
+                                                <i class="fas fa-star text-yellow-500"></i>
+                                                <i class="fas fa-star text-yellow-500"></i>
+                                                <i class="fas fa-star text-yellow-500"></i>
+                                                <i class="fas fa-star text-yellow-500"></i>
+                                                <i class="far fa-star text-yellow-500"></i>
+                                            </div>
+                                        </div>
+                                        <span class="text-xs text-gray-500">2023-05-08</span>
+                                    </div>
+                                    
+                                    <p class="text-gray-700 mb-3">Good variety of food options at reasonable prices. Can get crowded during lunch hours.</p>
+                                    
+                                    <div class="flex justify-between items-center">
+                                        <span class="text-sm text-gray-500">by Anonymous Student</span>
+                                        <div class="flex space-x-2">
+                                            <button class="text-gray-500 hover:text-muj-red transition">
+                                                <i class="far fa-thumbs-up"></i>
+                                            </button>
+                                            <button class="text-gray-500 hover:text-muj-red transition">
+                                                <i class="far fa-comment"></i>
+                                            </button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Notices & Events Page -->
+        <div id="notices-events" class="page">
+            <div class="bg-white py-8">
+                <div class="container mx-auto px-4">
+                    <div class="flex justify-between items-center mb-6">
+                        <div>
+                            <h1 class="text-3xl font-bold mb-2 muj-red">Notices & Events</h1>
+                            <p class="text-gray-600">Stay updated with the latest campus announcements and events</p>
+                        </div>
+                        <button onclick="toggleAdminMode()" class="px-4 py-2 rounded-md font-medium bg-muj-red text-white hover:bg-red-700 transition">
+                            Admin Login
+                        </button>
+                    </div>
+                    
+                    <!-- Admin Panel -->
+                    <div id="adminPanel" class="bg-gray-50 p-6 rounded-lg shadow-md mb-8" style="display: none;">
+                        <h2 class="text-xl font-semibold mb-4 muj-red">Post New Notice/Event</h2>
+                        
+                        <form onsubmit="postNotice(event)">
+                            <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
+                                <div>
+                                    <label class="block text-sm font-medium text-gray-700 mb-1">Title</label>
+                                    <input type="text" placeholder="Enter title" class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-muj-red" required>
+                                </div>
+                                
+                                <div>
+                                    <label class="block text-sm font-medium text-gray-700 mb-1">Date</label>
+                                    <input type="date" class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-muj-red" required>
+                                </div>
+                            </div>
+                            
+                            <div class="mb-4">
+                                <label class="block text-sm font-medium text-gray-700 mb-1">Content</label>
+                                <textarea rows="3" placeholder="Enter content" class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-muj-red" required></textarea>
+                            </div>
+                            
+                            <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
+                                <div>
+                                    <label class="block text-sm font-medium text-gray-700 mb-1">Type</label>
+                                    <select class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-muj-red">
+                                        <option>Notice</option>
+                                        <option>Event</option>
+                                    </select>
+                                </div>
+                                
+                                <div class="flex items-center">
+                                    <input type="checkbox" class="h-4 w-4 text-muj-red focus:ring-muj-red border-gray-300 rounded">
+                                    <label class="ml-2 block text-sm text-gray-700">
+                                        Mark as important
+                                    </label>
+                                </div>
+                            </div>
+                            
+                            <button type="submit" class="bg-muj-red text-white px-4 py-2 rounded-md hover:bg-red-700 transition">
+                                Post Notice/Event
+                            </button>
+                        </form>
+                    </div>
+                    
+                    <!-- Tabs for Notices and Events -->
+                    <div class="border-b border-gray-200 mb-6">
+                        <nav class="-mb-px flex space-x-8">
+                            <button onclick="showTab('notices')" class="tab-button active py-4 px-1 font-medium text-sm text-muj-red">
+                                Notices (2)
+                            </button>
+                            <button onclick="showTab('events')" class="tab-button py-4 px-1 font-medium text-sm text-gray-500 hover:text-gray-700">
+                                Events (1)
+                            </button>
+                        </nav>
+                    </div>
+                    
+                    <!-- Notices List -->
+                    <div id="noticesTab" class="tab-content active space-y-4">
+                        <!-- Notice Card 1 -->
+                        <div class="bg-white border border-red-300 rounded-lg shadow-sm p-5 hover:shadow-md transition">
+                            <div class="flex justify-between items-start mb-3">
+                                <div class="flex items-center">
+                                    <span class="mr-2 px-2 py-1 bg-red-100 text-red-800 text-xs font-medium rounded-full">
+                                        Important
+                                    </span>
+                                    <h3 class="text-lg font-semibold text-gray-900">End Semester Examination Schedule</h3>
+                                </div>
+                                <span class="text-sm text-gray-500">2023-05-10</span>
+                            </div>
+                            
+                            <p class="text-gray-700 mb-4">The end semester examinations will commence from May 20, 2023. Students are advised to check the detailed schedule on the university portal.</p>
+                        </div>
+                        
+                        <!-- Notice Card 2 -->
+                        <div class="bg-white border border-gray-200 rounded-lg shadow-sm p-5 hover:shadow-md transition">
+                            <div class="flex justify-between items-start mb-3">
+                                <h3 class="text-lg font-semibold text-gray-900">Library Timings Change</h3>
+                                <span class="text-sm text-gray-500">2023-05-08</span>
+                            </div>
+                            
+                            <p class="text-gray-700 mb-4">With effect from May 15, 2023, the library will be open from 8:00 AM to 8:00 PM on all working days.</p>
+                        </div>
+                    </div>
+                    
+                    <!-- Events List -->
+                    <div id="eventsTab" class="tab-content space-y-4">
+                        <!-- Event Card 1 -->
+                        <div class="bg-white border border-gray-200 rounded-lg shadow-sm p-5 hover:shadow-md transition">
+                            <div class="flex justify-between items-start mb-3">
+                                <h3 class="text-lg font-semibold text-gray-900">Annual Tech Fest - TechNITi 2023</h3>
+                                <span class="text-sm text-gray-500">2023-04-15</span>
+                            </div>
+                            
+                            <p class="text-gray-700 mb-4">The annual technical festival of MUJ, TechNITi 2023, will be held from June 10-12, 2023. Students are invited to participate in various events.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Forum Page -->
+        <div id="forum" class="page">
+            <div class="bg-white py-8">
+                <div class="container mx-auto px-4">
+                    <h1 class="text-3xl font-bold mb-2 muj-red">Query & Discussion Forum</h1>
+                    <p class="text-gray-600 mb-8">Connect with fellow students and faculty</p>
+                    
+                    <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+                        <!-- New Post Form -->
+                        <div class="lg:col-span-1">
+                            <div class="bg-gray-50 p-6 rounded-lg shadow-md sticky top-24">
+                                <h2 class="text-xl font-semibold mb-4 muj-red">Start a Discussion</h2>
+                                
+                                <form onsubmit="submitForumPost(event)">
+                                    <div class="mb-4">
+                                        <label class="block text-sm font-medium text-gray-700 mb-1">Title</label>
+                                        <input type="text" placeholder="Enter discussion title" class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-muj-red" required>
+                                    </div>
+                                    
+                                    <div class="mb-4">
+                                        <label class="block text-sm font-medium text-gray-700 mb-1">Your Question</label>
+                                        <textarea rows="4" placeholder="What would you like to discuss?" class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-muj-red" required></textarea>
+                                    </div>
+                                    
+                                    <button type="submit" class="w-full bg-muj-red text-white py-2 rounded-md hover:bg-red-700 transition">
+                                        Post Discussion
+                                    </button>
+                                </form>
+                                
+                                <div class="mt-6">
+                                    <h3 class="font-medium text-gray-700 mb-2">Forum Guidelines</h3>
+                                    <ul class="text-sm text-gray-600 space-y-1">
+                                        <li>• Be respectful and considerate</li>
+                                        <li>• Search before posting a new question</li>
+                                        <li>• Use clear and descriptive titles</li>
+                                        <li>• Mark helpful answers as such</li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <!-- Forum Posts -->
+                        <div class="lg:col-span-2">
+                            <div class="space-y-6">
+                                <!-- Forum Post 1 -->
+                                <div class="bg-white border border-gray-200 rounded-lg shadow-sm p-5 hover:shadow-md transition">
+                                    <div class="mb-4">
+                                        <h3 class="text-lg font-semibold text-gray-900 mb-2">Best study spots for group discussions?</h3>
+                                        <p class="text-gray-700">I'm looking for good places on campus where my group can discuss our project. Any recommendations?</p>
+                                    </div>
+                                    
+                                    <div class="flex justify-between items-center text-sm text-gray-500 mb-4">
+                                        <span>by Anonymous Student</span>
+                                        <span>2023-05-15 14:30</span>
+                                    </div>
+                                    
+                                    <div class="border-t border-gray-200 pt-4">
+                                        <div class="flex justify-between items-center mb-3">
+                                            <h4 class="font-medium text-gray-700">Replies (2)</h4>
+                                            <button class="text-sm text-muj-red hover:text-red-600 transition">
+                                                Add Reply
+                                            </button>
+                                        </div>
+                                        
+                                        <!-- Reply 1 -->
+                                        <div class="bg-gray-50 p-4 rounded-md mb-3">
+                                            <p class="text-gray-700 mb-2">The Innovation Center has great collaborative spaces with whiteboards.</p>
+                                            
+                                            <div class="flex justify-between items-center text-sm">
+                                                <div class="flex items-center space-x-3">
+                                                    <span class="text-gray-500">by Anonymous Student</span>
+                                                    <span class="text-gray-500">2023-05-15 15:45</span>
+                                                </div>
+                                                
+                                                <div class="flex items-center space-x-2">
+                                                    <button class="flex items-center text-gray-500 hover:text-muj-red transition">
+                                                        <i class="far fa-thumbs-up mr-1"></i>
+                                                        <span>5</span>
+                                                    </button>
+                                                    
+                                                    <button class="flex items-center text-green-600 transition">
+                                                        <i class="fas fa-check-circle mr-1"></i>
+                                                        <span>Helpful</span>
+                                                    </button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        
+                                        <!-- Reply 2 -->
+                                        <div class="bg-gray-50 p-4 rounded-md">
+                                            <p class="text-gray-700 mb-2">Try the group study rooms in the library. You can book them in advance.</p>
+                                            
+                                            <div class="flex justify-between items-center text-sm">
+                                                <div class="flex items-center space-x-3">
+                                                    <span class="text-gray-500">by Anonymous Student</span>
+                                                    <span class="text-gray-500">2023-05-15 16:20</span>
+                                                </div>
+                                                
+                                                <div class="flex items-center space-x-2">
+                                                    <button class="flex items-center text-gray-500 hover:text-muj-red transition">
+                                                        <i class="far fa-thumbs-up mr-1"></i>
+                                                        <span>3</span>
+                                                    </button>
+                                                    
+                                                    <button class="flex items-center text-gray-500 hover:text-green-600 transition">
+                                                        <i class="far fa-check-circle mr-1"></i>
+                                                        <span>Helpful</span>
+                                                    </button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                
+                                <!-- Forum Post 2 -->
+                                <div class="bg-white border border-gray-200 rounded-lg shadow-sm p-5 hover:shadow-md transition">
+                                    <div class="mb-4">
+                                        <h3 class="text-lg font-semibold text-gray-900 mb-2">How to get involved in campus clubs?</h3>
+                                        <p class="text-gray-700">I'm a new student and want to join some clubs. What's the process like?</p>
+                                    </div>
+                                    
+                                    <div class="flex justify-between items-center text-sm text-gray-500 mb-4">
+                                        <span>by Anonymous Student</span>
+                                        <span>2023-05-14 10:15</span>
+                                    </div>
+                                    
+                                    <div class="border-t border-gray-200 pt-4">
+                                        <div class="flex justify-between items-center mb-3">
+                                            <h4 class="font-medium text-gray-700">Replies (1)</h4>
+                                            <button class="text-sm text-muj-red hover:text-red-600 transition">
+                                                Add Reply
+                                            </button>
+                                        </div>
+                                        
+                                        <!-- Reply 1 -->
+                                        <div class="bg-gray-50 p-4 rounded-md">
+                                            <p class="text-gray-700 mb-2">There's a club fair at the beginning of each semester where you can sign up.</p>
+                                            
+                                            <div class="flex justify-between items-center text-sm">
+                                                <div class="flex items-center space-x-3">
+                                                    <span class="text-gray-500">by Anonymous Student</span>
+                                                    <span class="text-gray-500">2023-05-14 11:30</span>
+                                                </div>
+                                                
+                                                <div class="flex items-center space-x-2">
+                                                    <button class="flex items-center text-gray-500 hover:text-muj-red transition">
+                                                        <i class="far fa-thumbs-up mr-1"></i>
+                                                        <span>7</span>
+                                                    </button>
+                                                    
+                                                    <button class="flex items-center text-green-600 transition">
+                                                        <i class="fas fa-check-circle mr-1"></i>
+                                                        <span>Helpful</span>
+                                                    </button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Profile Page -->
+        <div id="profile" class="page">
+            <div class="bg-white py-8">
+                <div class="container mx-auto px-4">
+                    <h1 class="text-3xl font-bold mb-2 muj-red">Profile</h1>
+                    <p class="text-gray-600 mb-8">Manage your personal information and activity</p>
+                    
+                    <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+                        <!-- Profile Information -->
+                        <div class="lg:col-span-1">
+                            <div class="bg-gray-50 p-6 rounded-lg shadow-md">
+                                <div class="flex flex-col items-center mb-6">
+                                    <div class="w-24 h-24 bg-muj-red rounded-full flex items-center justify-center mb-4">
+                                        <span class="text-white text-2xl font-bold">AJ</span>
+                                    </div>
+                                    <h2 class="text-xl font-semibold text-gray-900">Alex Johnson</h2>
+                                    <p class="text-gray-600">B.Tech Computer Science</p>
+                                </div>
+                                
+                                <div class="mb-4">
+                                    <h3 class="text-sm font-medium text-gray-500 mb-1">Email</h3>
+                                    <p class="text-gray-900">alex.johnson@example.com</p>
+                                </div>
+                                
+                                <div class="mb-4">
+                                    <h3 class="text-sm font-medium text-gray-500 mb-1">Course</h3>
+                                    <p class="text-gray-900">B.Tech Computer Science</p>
+                                </div>
+                                
+                                <div class="mb-4">
+                                    <h3 class="text-sm font-medium text-gray-500 mb-1">Year</h3>
+                                    <p class="text-gray-900">3rd Year</p>
+                                </div>
+                                
+                                <div class="mb-6">
+                                    <h3 class="text-sm font-medium text-gray-500 mb-1">Member Since</h3>
+                                    <p class="text-gray-900">August 15, 2021</p>
+                                </div>
+                                
+                                <div class="mb-6">
+                                    <h3 class="text-sm font-medium text-gray-500 mb-1">Bio</h3>
+                                    <p class="text-gray-900">Passionate about coding and technology. Love to explore new places on campus and meet new people.</p>
+                                </div>
+                                
+                                <button class="w-full bg-muj-red text-white py-2 rounded-md hover:bg-red-700 transition">
+                                    Edit Profile
+                                </button>
+                            </div>
+                        </div>
+                        
+                        <!-- User Activity -->
+                        <div class="lg:col-span-2">
+                            <div class="bg-white border border-gray-200 rounded-lg shadow-sm p-5 mb-6">
+                                <h2 class="text-xl font-semibold mb-4 muj-red">Your Activity</h2>
+                                
+                                <div class="grid grid-cols-1 md:grid-cols-3 gap-4 mb-6">
+                                    <div class="bg-gray-50 p-4 rounded-lg text-center">
+                                        <div class="text-2xl font-bold muj-red mb-1">2</div>
+                                        <div class="text-sm text-gray-600">Forum Posts</div>
+                                    </div>
+                                    
+                                    <div class="bg-gray-50 p-4 rounded-lg text-center">
+                                        <div class="text-2xl font-bold muj-red mb-1">2</div>
+                                        <div class="text-sm text-gray-600">Reviews</div>
+                                    </div>
+                                    
+                                    <div class="bg-gray-50 p-4 rounded-lg text-center">
+                                        <div class="text-2xl font-bold muj-red mb-1">2</div>
+                                        <div class="text-sm text-gray-600">Favorite Spots</div>
+                                    </div>
+                                </div>
+                                
+                                <!-- Tabs for different activity types -->
+                                <div class="border-b border-gray-200 mb-4">
+                                    <nav class="-mb-px flex space-x-8">
+                                        <button class="tab-button active py-2 px-1 font-medium text-sm text-muj-red">
+                                            Posts
+                                        </button>
+                                        <button class="tab-button py-2 px-1 font-medium text-sm text-gray-500 hover:text-gray-700">
+                                            Reviews
+                                        </button>
+                                        <button class="tab-button py-2 px-1 font-medium text-sm text-gray-500 hover:text-gray-700">
+                                            Favorite Spots
+                                        </button>
+                                    </nav>
+                                </div>
+                                
+                                <!-- User Posts -->
+                                <div class="space-y-4">
+                                    <!-- Post 1 -->
+                                    <div class="border border-gray-200 rounded-lg p-4 hover:shadow-md transition">
+                                        <div class="flex justify-between items-start mb-2">
+                                            <h3 class="font-medium text-gray-900">Best study spots for group discussions?</h3>
+                                            <span class="text-xs text-gray-500">2023-05-15 14:30</span>
+                                        </div>
+                                        <p class="text-gray-700 text-sm mb-2">I'm looking for good places on campus where my group can discuss our project. Any recommendations?</p>
+                                        <span class="inline-block px-2 py-1 bg-gray-100 text-gray-800 text-xs rounded">
+                                            Forum
+                                        </span>
+                                    </div>
+                                    
+                                    <!-- Post 2 -->
+                                    <div class="border border-gray-200 rounded-lg p-4 hover:shadow-md transition">
+                                        <div class="flex justify-between items-start mb-2">
+                                            <h3 class="font-medium text-gray-900">Central Library Review</h3>
+                                            <span class="text-xs text-gray-500">2023-05-10 11:20</span>
+                                        </div>
+                                        <p class="text-gray-700 text-sm mb-2">The library is excellent! Great collection of books and very quiet environment perfect for studying.</p>
+                                        <span class="inline-block px-2 py-1 bg-gray-100 text-gray-800 text-xs rounded">
+                                            Review
+                                        </span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Admin Dashboard Page -->
+        <div id="admin" class="page">
+            <div class="bg-white py-8">
+                <div class="container mx-auto px-4">
+                    <h1 class="text-3xl font-bold mb-2 muj-red">Admin Dashboard</h1>
+                    <p class="text-gray-600 mb-8">Manage and moderate the MUJ CONNECT platform</p>
+                    
+                    <!-- Analytics Cards -->
+                    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
+                        <div class="bg-white border border-gray-200 rounded-lg shadow-sm p-5 hover:shadow-md transition">
+                            <div class="flex items-center">
+                                <div class="p-3 rounded-full bg-red-100 mr-4">
+                                    <i class="fas fa-users text-xl muj-red"></i>
+                                </div>
+                                <div>
+                                    <div class="text-2xl font-bold text-gray-900">1,245</div>
+                                    <div class="text-sm text-gray-600">Total Users</div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="bg-white border border-gray-200 rounded-lg shadow-sm p-5 hover:shadow-md transition">
+                            <div class="flex items-center">
+                                <div class="p-3 rounded-full bg-red-100 mr-4">
+                                    <i class="fas fa-file-alt text-xl muj-red"></i>
+                                </div>
+                                <div>
+                                    <div class="text-2xl font-bold text-gray-900">89</div>
+                                    <div class="text-sm text-gray-600">Active Posts</div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="bg-white border border-gray-200 rounded-lg shadow-sm p-5 hover:shadow-md transition">
+                            <div class="flex items-center">
+                                <div class="p-3 rounded-full bg-red-100 mr-4">
+                                    <i class="fas fa-star text-xl muj-red"></i>
+                                </div>
+                                <div>
+                                    <div class="text-2xl font-bold text-gray-900">4.2</div>
+                                    <div class="text-sm text-gray-600">Average Rating</div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="bg-white border border-gray-200 rounded-lg shadow-sm p-5 hover:shadow-md transition">
+                            <div class="flex items-center">
+                                <div class="p-3 rounded-full bg-red-100 mr-4">
+                                    <i class="fas fa-clock text-xl muj-red"></i>
+                                </div>
+                                <div>
+                                    <div class="text-2xl font-bold text-gray-900">12</div>
+                                    <div class="text-sm text-gray-600">Pending Reviews</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
+                        <!-- Pending Confessions -->
+                        <div class="bg-white border border-gray-200 rounded-lg shadow-sm p-5">
+                            <div class="flex justify-between items-center mb-4">
+                                <h2 class="text-xl font-semibold muj-red">Pending Confessions</h2>
+                                <span class="bg-red-100 text-red-800 text-xs font-medium px-2.5 py-0.5 rounded-full">
+                                    3 pending
+                                </span>
+                            </div>
+                            
+                            <div class="space-y-4">
+                                <!-- Confession 1 -->
+                                <div class="border border-gray-200 rounded-lg p-4">
+                                    <div class="flex justify-between items-start mb-2">
+                                        <span class="px-2 py-1 rounded-full text-xs font-medium bg-blue-100 text-blue-800">
+                                            Academic
+                                        </span>
+                                        <span class="text-xs text-gray-500">2023-05-15 14:30</span>
+                                    </div>
+                                    
+                                    <p class="text-gray-700 mb-4">I've been struggling with my programming assignments lately. Can anyone recommend good resources to learn coding better?</p>
+                                    
+                                    <div class="flex justify-end space-x-2">
+                                        <button class="px-3 py-1 bg-gray-200 text-gray-800 rounded-md text-sm hover:bg-gray-300 transition">
+                                            Reject
+                                        </button>
+                                        <button class="px-3 py-1 bg-muj-red text-white rounded-md text-sm hover:bg-red-700 transition">
+                                            Approve
+                                        </button>
+                                    </div>
+                                </div>
+                                
+                                <!-- Confession 2 -->
+                                <div class="border border-gray-200 rounded-lg p-4">
+                                    <div class="flex justify-between items-start mb-2">
+                                        <span class="px-2 py-1 rounded-full text-xs font-medium bg-green-100 text-green-800">
+                                            Social
+                                        </span>
+                                        <span class="text-xs text-gray-500">2023-05-14 09:15</span>
+                                    </div>
+                                    
+                                    <p class="text-gray-700 mb-4">The WiFi in the hostel is really slow. Is there any plan to upgrade it soon?</p>
+                                    
+                                    <div class="flex justify-end space-x-2">
+                                        <button class="px-3 py-1 bg-gray-200 text-gray-800 rounded-md text-sm hover:bg-gray-300 transition">
+                                            Reject
+                                        </button>
+                                        <button class="px-3 py-1 bg-muj-red text-white rounded-md text-sm hover:bg-red-700 transition">
+                                            Approve
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <!-- Quick Actions -->
+                        <div class="bg-white border border-gray-200 rounded-lg shadow-sm p-5">
+                            <h2 class="text-xl font-semibold mb-4 muj-red">Quick Actions</h2>
+                            
+                            <div class="space-y-4">
+                                <div class="border border-gray-200 rounded-lg p-4 hover:shadow-md transition cursor-pointer">
+                                    <div class="flex items-center">
+                                        <div class="p-2 rounded-full bg-red-100 mr-3">
+                                            <i class="fas fa-plus text-muj-red"></i>
+                                        </div>
+                                        <div>
+                                            <h3 class="font-medium text-gray-900">Post Notice</h3>
+                                            <p class="text-sm text-gray-600">Create a new notice or event</p>
+                                        </div>
+                                    </div>
+                                </div>
+                                
+                                <div class="border border-gray-200 rounded-lg p-4 hover:shadow-md transition cursor-pointer">
+                                    <div class="flex items-center">
+                                        <div class="p-2 rounded-full bg-red-100 mr-3">
+                                            <i class="fas fa-user-cog text-muj-red"></i>
+                                        </div>
+                                        <div>
+                                            <h3 class="font-medium text-gray-900">Manage Users</h3>
+                                            <p class="text-sm text-gray-600">View and manage user accounts</p>
+                                        </div>
+                                    </div>
+                                </div>
+                                
+                                <div class="border border-gray-200 rounded-lg p-4 hover:shadow-md transition cursor-pointer">
+                                    <div class="flex items-center">
+                                        <div class="p-2 rounded-full bg-red-100 mr-3">
+                                            <i class="fas fa-chart-bar text-muj-red"></i>
+                                        </div>
+                                        <div>
+                                            <h3 class="font-medium text-gray-900">View Reports</h3>
+                                            <p class="text-sm text-gray-600">Generate platform usage reports</p>
+                                        </div>
+                                    </div>
+                                </div>
+                                
+                                <div class="border border-gray-200 rounded-lg p-4 hover:shadow-md transition cursor-pointer">
+                                    <div class="flex items-center">
+                                        <div class="p-2 rounded-full bg-red-100 mr-3">
+                                            <i class="fas fa-cog text-muj-red"></i>
+                                        </div>
+                                        <div>
+                                            <h3 class="font-medium text-gray-900">Settings</h3>
+                                            <p class="text-sm text-gray-600">Configure platform settings</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="bg-muj-red text-white py-8">
+        <div class="container mx-auto px-4">
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-8">
+                <div>
+                    <h3 class="text-xl font-bold mb-4">MUJ CONNECT</h3>
+                    <p class="text-red-200">Your Campus, Your Connection.</p>
+                </div>
+                <div>
+                    <h4 class="text-lg font-semibold mb-4">Quick Links</h4>
+                    <ul class="space-y-2">
+                        <li><a href="#" onclick="showPage('home')" class="text-red-200 hover:text-white transition">Home</a></li>
+                        <li><a href="#" onclick="showPage('study-spots')" class="text-red-200 hover:text-white transition">Study Spots</a></li>
+                        <li><a href="#" onclick="showPage('eating-spots')" class="text-red-200 hover:text-white transition">Eating Spots</a></li>
+                        <li><a href="#" onclick="showPage('confessions')" class="text-red-200 hover:text-white transition">Confessions</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h4 class="text-lg font-semibold mb-4">Resources</h4>
+                    <ul class="space-y-2">
+                        <li><a href="#" onclick="showPage('reviews')" class="text-red-200 hover:text-white transition">Reviews</a></li>
+                        <li><a href="#" onclick="showPage('notices-events')" class="text-red-200 hover:text-white transition">Notices & Events</a></li>
+                        <li><a href="#" onclick="showPage('forum')" class="text-red-200 hover:text-white transition">Forum</a></li>
+                        <li><a href="#" onclick="showPage('profile')" class="text-red-200 hover:text-white transition">Profile</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h4 class="text-lg font-semibold mb-4">Contact Us</h4>
+                    <address class="not-italic text-red-200">
+                        <p>Manipal University Jaipur</p>
+                        <p>Jaipur-Ajmer Expressway,</p>
+                        <p>Dehmi Kalan, Rajasthan 303007</p>
+                        <p class="mt-2">Email: info@muj.ac.in</p>
+                    </address>
+                </div>
+            </div>
+            <div class="border-t border-red-700 mt-8 pt-6 text-center text-red-200">
+                <p>&copy; 2023 MUJ CONNECT. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Login Modal -->
+    <div id="loginModal" class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50" style="display: none;">
+        <div class="bg-white rounded-lg p-8 max-w-md w-full">
+            <div class="flex justify-between items-center mb-6">
+                <h2 class="text-2xl font-bold muj-red">Login to MUJ CONNECT</h2>
+                <button onclick="closeLoginModal()" class="text-gray-500 hover:text-gray-700">
+                    <i class="fas fa-times text-xl"></i>
+                </button>
+            </div>
+            
+            <form onsubmit="handleLogin(event)">
+                <div class="mb-4">
+                    <label class="block text-sm font-medium text-gray-700 mb-1">Email</label>
+                    <input type="email" class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-muj-red" required>
+                </div>
+                
+                <div class="mb-6">
+                    <label class="block text-sm font-medium text-gray-700 mb-1">Password</label>
+                    <input type="password" class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-muj-red" required>
+                </div>
+                
+                <div class="flex items-center justify-between mb-6">
+                    <div class="flex items-center">
+                        <input type="checkbox" class="h-4 w-4 text-muj-red focus:ring-muj-red border-gray-300 rounded">
+                        <label class="ml-2 block text-sm text-gray-700">
+                            Remember me
+                        </label>
+                    </div>
+                    
+                    <a href="#" class="text-sm text-muj-red hover:text-red-600">
+                        Forgot password?
+                    </a>
+                </div>
+                
+                <button type="submit" class="w-full bg-muj-red text-white py-2 rounded-md hover:bg-red-700 transition mb-4">
+                    Sign In
+                </button>
+                
+                <div class="text-center">
+                    <p class="text-sm text-gray-600">
+                        Don't have an account? 
+                        <a href="#" onclick="showPage('profile'); closeLoginModal();" class="text-muj-red hover:text-red-600 font-medium">
+                            Sign up
+                        </a>
+                    </p>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <script>
+        // Page navigation
+        function showPage(pageId) {
+            // Hide all pages
+            const pages = document.querySelectorAll('.page');
+            pages.forEach(page => {
+                page.classList.remove('active');
+            });
+            
+            // Show selected page
+            document.getElementById(pageId).classList.add('active');
+            
+            // Scroll to top
+            window.scrollTo(0, 0);
+            
+            // Close mobile menu
+            document.getElementById('mobileMenu').classList.remove('active');
+        }
+        
+        // Mobile menu toggle
+        function toggleMobileMenu() {
+            const mobileMenu = document.getElementById('mobileMenu');
+            mobileMenu.classList.toggle('active');
+        }
+        
+        // Tab functionality
+        function showTab(tabId) {
+            // Hide all tab contents
+            const tabContents = document.querySelectorAll('.tab-content');
+            tabContents.forEach(content => {
+                content.classList.remove('active');
+            });
+            
+            // Remove active class from all tab buttons
+            const tabButtons = document.querySelectorAll('.tab-button');
+            tabButtons.forEach(button => {
+                button.classList.remove('active');
+            });
+            
+            // Show selected tab content
+            document.getElementById(tabId + 'Tab').classList.add('active');
+            
+            // Add active class to clicked button
+            event.target.classList.add('active');
+        }
+        
+        // Admin mode toggle
+        function toggleAdminMode() {
+            const adminPanel = document.getElementById('adminPanel');
+            if (adminPanel.style.display === 'none') {
+                adminPanel.style.display = 'block';
+            } else {
+                adminPanel.style.display = 'none';
+            }
+        }
+        
+        // Login modal
+        function showLoginModal() {
+            document.getElementById('loginModal').style.display = 'flex';
+        }
+        
+        function closeLoginModal() {
+            document.getElementById('loginModal').style.display = 'none';
+        }
+        
+        // Form submissions
+        function submitConfession(event) {
+            event.preventDefault();
+            alert('Your confession has been submitted for approval!');
+            event.target.reset();
+        }
+        
+        function submitReview(event) {
+            event.preventDefault();
+            alert('Your review has been submitted successfully!');
+            event.target.reset();
+        }
+        
+        function postNotice(event) {
+            event.preventDefault();
+            alert('Notice/Event has been posted successfully!');
+            event.target.reset();
+        }
+        
+        function submitForumPost(event) {
+            event.preventDefault();
+            alert('Your discussion has been posted successfully!');
+            event.target.reset();
+        }
+        
+        function handleLogin(event) {
+            event.preventDefault();
+            alert('Login successful! Redirecting to home page...');
+            closeLoginModal();
+            showPage('home');
+        }
+        
+        // Star rating functionality
+        document.addEventListener('DOMContentLoaded', function() {
+            const stars = document.querySelectorAll('.star');
+            
+            stars.forEach(star => {
+                star.addEventListener('click', function() {
+                    const rating = parseInt(this.getAttribute('data-rating'));
+                    
+                    // Update star display
+                    stars.forEach(s => {
+                        if (parseInt(s.getAttribute('data-rating')) <= rating) {
+                            s.classList.add('active');
+                        } else {
+                            s.classList.remove('active');
+                        }
+                    });
+                });
+            });
+        });
+        
+        // Close modal when clicking outside
+        window.onclick = function(event) {
+            const modal = document.getElementById('loginModal');
+            if (event.target === modal) {
+                closeLoginModal();
+            }
+        }
+    </script>
+</body>
+</html>
